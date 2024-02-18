@@ -3,26 +3,41 @@ import mediaJSON from "./data.json";
 import VideoCard from "./VideoCard";
 import Searchbar from "../../shared/searchbar";
 import { useTheme } from "../../contexts/ThemeContext";
+import Pagination from "../../shared/pagination";
 
 const Videos = () => {
+  const videosPerPage = 8;
   const videos = mediaJSON.categories[0].videos;
+  const [currentPage, setCurrentPage] = useState(1);
   const [filteredVideos, setFilteredVideos] = useState(videos);
+  const totalPages = Math.ceil(filteredVideos.length / videosPerPage);
   const { theme } = useTheme();
   const [playingVideoId, setPlayingVideoId] = useState(null);
 
   const handleSearchChange = (searchTerm) => {
-    setFilteredVideos(
-      !searchTerm
-        ? videos
-        : videos.filter((video) =>
-            video.title.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-    );
+    const filtered = !searchTerm
+      ? videos
+      : videos.filter((video) =>
+          video.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    setFilteredVideos(filtered);
+    setCurrentPage(1);
   };
 
   const handleVideoPlay = (id) => {
     setPlayingVideoId(id);
   };
+
+  const onPageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const indexOfLastVideo = currentPage * videosPerPage;
+  const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
+  const currentVideos = filteredVideos.slice(
+    indexOfFirstVideo,
+    indexOfLastVideo
+  );
 
   return (
     <div className={`min-h-screen ${theme === "dark" ? "dark" : ""}`}>
@@ -35,7 +50,7 @@ const Videos = () => {
           onSearchChange={handleSearchChange}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredVideos.map((video, index) => (
+          {currentVideos.map((video, index) => (
             <VideoCard
               key={index}
               video={video}
@@ -45,6 +60,14 @@ const Videos = () => {
             />
           ))}
         </div>
+
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
+        )}
       </div>
     </div>
   );
