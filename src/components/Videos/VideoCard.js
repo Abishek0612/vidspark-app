@@ -21,7 +21,14 @@ const skeletonLoaderStyle = css`
   width: 100%;
 `;
 
-const VideoCard = ({ video, theme }) => {
+const VideoCard = ({
+  video,
+  theme,
+  isDragEnabled,
+  onDragStart,
+  onDragEnter,
+  onDragEnd,
+}) => {
   const [isVideoLoaded, setVideoLoaded] = useState(false);
   const [showThumbnail, setShowThumbnail] = useState(true);
   const videoRef = useRef(null);
@@ -63,13 +70,20 @@ const VideoCard = ({ video, theme }) => {
       ref={videoRef}
       className={`w-full max-w-sm rounded-lg shadow-md overflow-hidden mx-auto ${
         theme === "dark" ? "bg-gray-800" : "bg-white"
-      }`}
+      } ${isDragEnabled ? "cursor-grab" : ""}`}
+      draggable={isDragEnabled}
+      onDragStart={onDragStart}
+      onDragOver={(e) => e.preventDefault()}
+      onDragEnter={isDragEnabled ? onDragEnter : undefined}
+      onDragEnd={onDragEnd}
     >
       {showThumbnail && (
         <img
           src={video.thumb}
           alt="thumbnail"
-          className="w-full h-56 object-cover cursor-pointer"
+          className={`w-full h-56 object-cover ${
+            isDragEnabled ? "" : "cursor-pointer"
+          }`}
           onClick={handleThumbnailClick}
         />
       )}

@@ -17,3 +17,5 @@
 - Dark and Light mode using Context API
 - Feature implemented in videos (Thumbnai, Picture-in-picture, Accelerometer , Autoplay, Clipboard-write, Encrypted-media, Gyroscope, )
 - Search functionality (Videos and Youtube page)
+- Implemented Pagination (For videos page)
+- Implemented Drag & Drop to re arrange the videos
