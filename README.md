@@ -8,7 +8,7 @@
 
 # lighthouse score : Performance : 90 , Accessibility : 89 , Best Practice : 95 (Attached Performance report image)
 
-# Key points
+# Key Features
 
 - Lazy loading (to improve the Application performance)
 - Skelton Loading
