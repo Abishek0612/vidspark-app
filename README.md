@@ -6,7 +6,11 @@
 
 # npm start (To start or run the project)
 
-# lighthouse score : Performance : 90 , Accessibility : 89 , Best Practice : 95 (Attached Performance report image)
+# Deployment URL : https://vidspark-video-app.netlify.app/
+
+# Devlopment lighthouse score : Performance : 90 , Accessibility : 89 , Best Practice : 95 (Attached Performance report image)
+
+# Production lighthouse score : Performance : 100 , Accessibility : 82 , Best Practice : 95 (Attached Development Lighouse score Performance report image)
 
 # Key Features
 
