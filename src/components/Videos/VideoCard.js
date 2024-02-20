@@ -56,14 +56,13 @@ const VideoCard = ({
       observer.observe(videoRef.current);
     }
 
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 
-  const handleThumbnailClick = () => {
-    setShowThumbnail(false);
-  };
+  const handleThumbnailClick = () => setShowThumbnail(false);
+
+  // Function to ensure video URLs are loaded over HTTPS
+  const secureVideoUrl = (url) => url.replace(/^http:/, "https:");
 
   return (
     <div
@@ -91,11 +90,11 @@ const VideoCard = ({
       {isVideoLoaded && !showThumbnail && (
         <iframe
           className="w-full h-56"
-          src={video.sources[0]}
+          src={secureVideoUrl(video.sources[0])}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          title={video?.snippet?.title}
+          title={video.title}
         ></iframe>
       )}
       <div className="px-5 py-3">
